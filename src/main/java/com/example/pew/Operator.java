@@ -1,3 +1,5 @@
+package com.example.pew;
+
 import javafx.stage.FileChooser;
 
 import java.io.File;

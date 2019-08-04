@@ -1,3 +1,5 @@
+package com.example.pew;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -9,9 +11,9 @@ import java.awt.*;
 import java.io.File;
 
 public class App extends Application {
-
     /**
      * Attempt listening for APP_OPEN_FILE events as soon as possible.
+     * *ATTENTION:* This does not work with a shell launcher.
      */
     static {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.APP_OPEN_FILE)) {
