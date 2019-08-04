@@ -7,8 +7,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class App extends Application {
     /**
@@ -27,6 +29,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        initTaskbar();
+
         // Check for files in provided console parameters
         Parameters params = getParameters();
         for (String param : params.getUnnamed()) Operator.parseInput(param);
@@ -47,6 +51,24 @@ public class App extends Application {
         Scene scene = new Scene(new VBox(l, new Label(chosenFile)), 320, 240);
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * Attempts to update the mac task bar with an icon.
+     */
+    private void initTaskbar() {
+        if (!Taskbar.isTaskbarSupported()) return;
+
+        Image icon = null;
+
+        try {
+            icon = ImageIO.read(getClass().getResourceAsStream("icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Set the icon for the dock
+        if (icon != null) Taskbar.getTaskbar().setIconImage(icon);
     }
 
     public static void main(String[] args) {

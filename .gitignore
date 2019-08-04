@@ -200,3 +200,4 @@ gradle-app.setting
 *.DS_Store
 .vscode/
 /libs
+*.iconset
