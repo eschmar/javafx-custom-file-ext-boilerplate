@@ -3,7 +3,6 @@ package com.example.pew;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,8 +20,11 @@ public class App extends Application {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.APP_OPEN_FILE)) {
             Desktop.getDesktop().setOpenFileHandler(event -> {
                 for (File file : event.getFiles()) {
-                    Operator.parseInput(file.getAbsolutePath());
+                    // Handle file path..
                 }
+
+                final String searchTerm = event.getSearchTerm();
+                // Handle search term..
             });
         }
     }
