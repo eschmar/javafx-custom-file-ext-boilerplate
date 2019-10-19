@@ -1,6 +1,7 @@
 package com.example.pew;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -40,17 +41,19 @@ public class App extends Application {
 
         if (Operator.getOpenFile() == null && !Operator.chooseNewFile()) {
             // Failed...
+            Platform.exit();
             return;
         }
 
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        // TODO: Show which file was opened.
-
         String chosenFile = "Opened file: " + Operator.getOpenFile().getAbsolutePath();
 
-        Scene scene = new Scene(new VBox(l, new Label(chosenFile)), 320, 240);
+        Scene scene = new Scene(new VBox(
+                new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + "."),
+                new Label(chosenFile)
+        ), 320, 240);
+
         stage.setScene(scene);
         stage.show();
     }

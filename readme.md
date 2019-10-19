@@ -16,8 +16,8 @@ The result:
 
 ## requirements
 
-* OpenJFX 12
-* OpenJDK 12
+* OpenJFX 13
+* OpenJDK 13
 * Gradle
 
 ## usage
