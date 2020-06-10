@@ -1,37 +1,34 @@
 <img src="https://github.com/eschmar/javafx-custom-file-ext-boilerplate/raw/master/src/main/resources/com/example/pew/icon.png" width="100" alt="Boilerplate recognising .pew files.">
 
 # JavaFX Custom File Extension Viewer boilerplate
-
-This is a boilerplate for creating a JavaFX application that is capable of handling a custom file extension. There are some nuances/caveats to getting this right (especially on MacOS), which are described in the [accompanying blog post](https://eschmann.io/posts/javafx-mac). In this example, the application is set up to handle `.pew` files with the bundle identifier `com.example.pew`. The [Makefile](https://github.com/eschmar/javafx-custom-file-ext-boilerplate/blob/master/Makefile) will generate a MacOS `.app` bundle by executing the following steps:
-
-* Build the JavaFX application using jlink
-* Generate a boilerplate `.app` bundle using `blueprint/launcher.applescript`
-* Copy over the Java image from the build folder to the app bundle
-* Replace the generated `Info.plist` file with a custom one from the `blueprint` folder
-* Compile the sketch file to an icon set `AppIcon.iconset` and replace the default droplet icon with it
-
-The result:
+This is a boilerplate for creating a JavaFX application that is capable of handling a custom file extension. There are some nuances/caveats to getting this right (especially on MacOS), which are described in the [accompanying blog post](https://eschmann.io/posts/javafx-mac). In this example, the application is set up to handle `.pew` files with the bundle identifier `com.example.pew`. The [Makefile](https://github.com/eschmar/javafx-custom-file-ext-boilerplate/blob/master/Makefile) will generate app bundles. The app simply prints out the file path:
 
 <img src="https://github.com/eschmar/javafx-custom-file-ext-boilerplate/raw/master/images/javafx-custom-file-extension.png" width="420" style="max-width: 420px;" alt="Boilerplate recognising .pew files.">
 
-## requirements
-
-* OpenJFX 13
-* OpenJDK 13
+## Requirements
+* OpenJFX 14
+* OpenJDK 14
 * Gradle
 
-## usage
+## Features
+* Associates a custom file type (.pew) with this application.
+* Uses the `jpackage` tool from open jdk 14 to create application bundles.
+* Capable of catching native apple `FILE_OPEN` events when double clicking files.
+* Contains separete icons for file type and application.
 
+## Caveats
+* In order to catch all macOS FILE_OPEN events, the `Launcher` class needed to be introduced. While it allows to catch initial events, using it and launching JavaFX over the Main method means that AWT is the main GUI toolkit. The native system menu bar on mac os is no longer supported as a consequence.
+* Mime-type is set to binary files. Change `*.properties` configurations to your needs.
+* Windows platform not tested, yet. MacOS and Linux (Debian) are.
+
+## Usage
 ```sh
 # run:
 make -B
 
 # bundle mac app:
-make -B plist icons bundle
+make -B jpackage_dawrin
+
+# bundle linux app:
+make -B jpackage_linux
 ```
-
-## Caveats
-
-* The java application itself will not carry the application name specified in the MacOS top menu bar, but will be named `java`. This should be solveable by providing the name as an option (`-Xdock:name="Example App"`) to the shell launcher, however that option has always been ignored for me.
-* Since the applescript launcher needs to "stay open", in order to receive further file opening events after launch, the launcher will remain in the Mac dock.
-* This is not a standard file structure, App Store would just reject this without further adjustments.

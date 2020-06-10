@@ -201,3 +201,5 @@ gradle-app.setting
 .vscode/
 /libs
 *.iconset
+.idea/
+

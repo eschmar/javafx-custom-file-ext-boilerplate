@@ -1,7 +1,7 @@
 plugins {
-  id 'application'
-  id 'org.openjfx.javafxplugin' version '0.0.8'
-  id 'org.beryx.jlink' version '2.12.0'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.19.0'
 }
 
 repositories {
@@ -9,22 +9,19 @@ repositories {
 }
 
 javafx {
-    version = "13"
-    modules = [ 'javafx.controls' ]
+    version = "14"
+    modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.base' ]
 }
 
-mainClassName = "$moduleName/com.example.pew.App"
+mainClassName = "$moduleName/com.example.pew.Launcher"
 
 jlink {
-  options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-  //javaHome = '/Library/Java/JavaVirtualMachines/adoptopenjdk-12.jdk/Contents/Home'
-  launcher {
-    name = 'app'
-    jvmArgs = ['-Xdock:name="Example App"']
-  }
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'pew'
+    }
 }
 
 dependencies {
-  testCompile group: 'junit', name: 'junit', version: '4.12'
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }

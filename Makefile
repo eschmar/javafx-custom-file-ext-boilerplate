@@ -2,33 +2,66 @@ CYAN=\033[0;36m
 NC=\033[0m
 
 APP_NAME=ExampleApp
+VERSION=2.0.0
+
 BUILD_DIR=./build
 TARGET=${BUILD_DIR}/${APP_NAME}.app
 JLINK_IMAGE=${BUILD_DIR}/image
 SKETCH_TOOL=/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool
 
-run:
+default:
 	./gradlew build run
 
-bundle:
-	rm -rf ${BUILD_DIR}
+jpackage_linux:
 	./gradlew jlink
 
-	@echo "\n> ${CYAN}Bundling Mac .app${NC}\n"
-	osacompile -o ${TARGET} -s blueprint/launcher.applescript
-	rm -f ${TARGET}/Contents/Info.plist
-	cp ./blueprint/Info.plist ${TARGET}/Contents
-	cp -R ${JLINK_IMAGE}/* ${TARGET}/Contents
-	mv ${TARGET}/Contents/bin/* ${TARGET}/Contents/MacOS
-	rm -rf ${TARGET}/Contents/bin
+	# Temporarily copy icon file to root dir, since it needs to be in input dir.
+	cp ./src/main/resources/com/example/pew/icon.png .
 
-	@echo "\n> ${CYAN}Add icon${NC}\n"
-	rm -f ${TARGET}/Contents/Resources/droplet.icns
-	cp ./blueprint/AppIcon.icns ${TARGET}/Contents/Resources
+	${JAVA_HOME}/bin/jpackage \
+		--app-version ${VERSION} \
+		--copyright "Copyright 2020, example.com" \
+		--description "Pew File Viewer" \
+		--name "${APP_NAME}" \
+		--dest build/distribution \
+		--vendor "example.com" \
+		--runtime-image build/image \
+		--icon icon.png \
+		--file-associations linux.properties \
+		--module pew/com.example.pew.Launcher
 
-plist:
-	plutil ./blueprint/Info.plist
+	rm -f icon.png
 
-icons:
-	${SKETCH_TOOL} export artboards ./blueprint/AppIcon.sketch --output=./blueprint/AppIcon.iconset
-	iconutil -c icns ./blueprint/AppIcon.iconset
+jpackage_darwin:
+	./gradlew jlink
+
+	# Temporarily copy icon file to root dir, since it needs to be in input dir.
+	cp ${BUILD_DIR}/res/FileIcon.icns ${BUILD_DIR}/..
+
+	${JAVA_HOME}/bin/jpackage \
+		--app-version ${VERSION} \
+		--copyright "Copyright 2020, example.com" \
+		--description "Pew File Viewer" \
+		--name "${APP_NAME}" \
+		--dest build/distribution \
+		--vendor "example.com" \
+		--runtime-image build/image \
+		--icon build/res/AppIcon.icns \
+		--mac-package-identifier com.example.pew \
+		--mac-package-name "PewFileViewer" \
+		--file-associations mac.properties \
+		--module pew/com.example.pew.Launcher
+
+	rm -f ${BUILD_DIR}/../FileIcon.icns
+
+sketch_icons:
+	${SKETCH_TOOL} export artboards ./raw/AppIcon.sketch --output=${BUILD_DIR}/res/AppIcon.iconset
+	iconutil -c icns ${BUILD_DIR}/res/AppIcon.iconset
+	rm -rf ${BUILD_DIR}/res/AppIcon.iconset
+
+	${SKETCH_TOOL} export artboards ./raw/FileIcon.sketch --output=${BUILD_DIR}/res/FileIcon.iconset
+	iconutil -c icns ${BUILD_DIR}/res/FileIcon.iconset
+	rm -rf ${BUILD_DIR}/res/FileIcon.iconset
+
+clean:
+	rm -rf ${BUILD_DIR}
