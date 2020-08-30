@@ -5,6 +5,8 @@ This is a boilerplate for creating a JavaFX application that is capable of handl
 
 <img src="https://github.com/eschmar/javafx-custom-file-ext-boilerplate/raw/master/images/javafx-custom-file-extension.png" width="420" style="max-width: 420px;" alt="Boilerplate recognising .pew files.">
 
+An example macOS bundle (.dmg) built using Github Actions [is available here](https://github.com/eschmar/javafx-custom-file-ext-boilerplate/actions) to check out.
+
 ## Requirements
 * OpenJFX 14
 * OpenJDK 14
