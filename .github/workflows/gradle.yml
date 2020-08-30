@@ -24,11 +24,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build with jlink
       run: ./gradlew jlink
-    - name: Copy Icon File Temporarily
-      uses: canastro/copy-file-action@master
-      with:
-        source: "raw/FileIcon.icns"
-        target: "FileIcon.icns"
     - name: Use jpackage to bundle macOS dmg
       run: |
         jpackage --app-version "1.0.0" \
