@@ -15,11 +15,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set Up OpenJDK 14
-      uses: actions/setup-java@v1
+    - uses: actions/checkout@v3
+    - name: Set Up OpenJDK 18
+      uses: actions/setup-java@v3
       with:
-        java-version: 14
+        java-version: 18
+        distribution: 'temurin'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with jlink
@@ -38,6 +39,6 @@ jobs:
         --file-associations mac.properties \
         --module pew/com.example.pew.Launcher
     - name: Upload Artefact
-      uses: actions/upload-artifact@v2.1.4
+      uses: actions/upload-artifact@v2
       with:
         path: ./*.dmg
