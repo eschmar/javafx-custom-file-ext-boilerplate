@@ -1,7 +1,7 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
-    id 'org.beryx.jlink' version '2.19.0'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.25.0'
 }
 
 repositories {
@@ -9,11 +9,14 @@ repositories {
 }
 
 javafx {
-    version = "14"
+    version = "18"
     modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.base' ]
 }
 
-mainClassName = "$moduleName/com.example.pew.Launcher"
+application {
+    mainModule = "$moduleName"
+    mainClass = "com.example.pew.Launcher"
+}
 
 jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
@@ -22,6 +25,6 @@ jlink {
     }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+test {
+    useJUnitPlatform()
 }

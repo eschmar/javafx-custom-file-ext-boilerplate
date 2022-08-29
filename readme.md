@@ -8,13 +8,13 @@ This is a boilerplate for creating a JavaFX application that is capable of handl
 An example macOS bundle (.dmg) built using Github Actions [is available here](https://github.com/eschmar/javafx-custom-file-ext-boilerplate/actions) to check out.
 
 ## Requirements
-* OpenJFX 14
-* OpenJDK 14
+* OpenJFX 18
+* OpenJDK 18
 * Gradle
 
 ## Features
 * Associates a custom file type (`.pew`) with this application.
-* Uses the `jpackage` tool from open jdk 14 to create application bundles.
+* Uses the `jpackage` tool from open jdk 18 to create application bundles.
 * Capable of catching native apple `FILE_OPEN` events when double clicking files.
 * Contains separete icons for file type and application.
 
