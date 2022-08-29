@@ -29,7 +29,7 @@ An example macOS bundle (.dmg) built using Github Actions [is available here](ht
 make -B
 
 # bundle mac app:
-make -B jpackage_dawrin
+make -B jpackage_darwin
 
 # bundle linux app:
 make -B jpackage_linux
