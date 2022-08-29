@@ -2,7 +2,7 @@ CYAN=\033[0;36m
 NC=\033[0m
 
 APP_NAME=ExampleApp
-VERSION=2.0.0
+VERSION=3.0.0
 
 BUILD_DIR=./build
 TARGET=${BUILD_DIR}/${APP_NAME}.app
@@ -20,7 +20,7 @@ jpackage_linux:
 
 	${JAVA_HOME}/bin/jpackage \
 		--app-version ${VERSION} \
-		--copyright "Copyright 2020, example.com" \
+		--copyright "Copyright 2022, example.com" \
 		--description "Pew File Viewer" \
 		--name "${APP_NAME}" \
 		--dest build/distribution \
@@ -40,7 +40,7 @@ jpackage_darwin:
 
 	${JAVA_HOME}/bin/jpackage \
 		--app-version ${VERSION} \
-		--copyright "Copyright 2020, example.com" \
+		--copyright "Copyright 2022, example.com" \
 		--description "Pew File Viewer" \
 		--name "${APP_NAME}" \
 		--dest build/distribution \
